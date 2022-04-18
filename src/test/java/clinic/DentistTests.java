@@ -44,7 +44,7 @@ public class DentistTests {
 
     @Test
 
-    public void findAllDentist(){
+    public void findAllDentist() throws ResourseNotFountException {
         Assertions.assertEquals(dentistService.findAll().size(), 2);
     }
     @Test

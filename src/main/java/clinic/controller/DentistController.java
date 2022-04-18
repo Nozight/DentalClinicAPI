@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -19,30 +18,22 @@ public class DentistController {
     @CrossOrigin(origins = "*")
     @GetMapping("/{id}")
     public ResponseEntity<DentistDTO> findById(@PathVariable("id") Integer id) throws ResourseNotFountException {
-        DentistDTO dentistDTO = dentistService.findById(id);
-        return  new ResponseEntity<>(dentistDTO, HttpStatus.OK);
+        return  new ResponseEntity<>(dentistService.findById(id), HttpStatus.OK);
     }
     @CrossOrigin(origins = "*")
     @GetMapping("/name")
     public ResponseEntity<DentistDTO> findByName(@RequestParam String name) throws ResourseNotFountException {
-        DentistDTO dentistDTO = dentistService.findDentistByName(name);
-        return new ResponseEntity<>(dentistDTO, HttpStatus.OK);
+        return new ResponseEntity<>(dentistService.findDentistByName(name), HttpStatus.OK);
     }
     @CrossOrigin(origins = "*")
     @PostMapping()
     public ResponseEntity<DentistDTO> create(@RequestBody DentistDTO dentistDTO){
-        DentistDTO newDentistDTO = dentistService.create(dentistDTO);
-        return new ResponseEntity<>(newDentistDTO, HttpStatus.OK);
+        return new ResponseEntity<>(dentistService.create(dentistDTO), HttpStatus.OK);
     }
     @CrossOrigin(origins = "*")
     @PutMapping()
     public ResponseEntity<DentistDTO> update(@RequestBody DentistDTO dentistDTO) throws ResourseNotFountException {
-        ResponseEntity<DentistDTO> response = null;
-        if(dentistDTO.getId() != null && dentistService.findById(dentistDTO.getId()) != null)
-            response = ResponseEntity.ok(dentistService.update(dentistDTO));
-        else
-            response = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return response;
+        return ResponseEntity.ok(dentistService.update(dentistDTO));
     }
     @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}")
@@ -52,9 +43,8 @@ public class DentistController {
     }
     @CrossOrigin(origins = "*")
     @GetMapping("/all")
-    public ResponseEntity<Set<DentistDTO>> findAll(){
-        Set<DentistDTO> dentistDTOSet = dentistService.findAll();
-        return  new ResponseEntity<>(dentistDTOSet, HttpStatus.OK);
+    public ResponseEntity<Set<DentistDTO>> findAll() throws ResourseNotFountException {
+        return  new ResponseEntity<>(dentistService.findAll(), HttpStatus.OK);
     }
 
 }

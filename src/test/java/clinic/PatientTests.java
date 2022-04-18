@@ -3,6 +3,7 @@ package clinic;
 import clinic.dto.AddressDTO;
 import clinic.dto.PatientDTO;
 
+import clinic.exceptions.ResourseNotFountException;
 import clinic.service.impl.PatientService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +18,7 @@ public class PatientTests {
     @Autowired
     PatientService patientService;
     @Test
-    public void findByIdPatient(){
+    public void findByIdPatient() throws ResourseNotFountException {
         AddressDTO a1 = new AddressDTO();
         a1.setStreet("adrsTest");
         a1.setLocality("adrsTest");
@@ -34,11 +35,11 @@ public class PatientTests {
     }
 
     @Test
-    public void findAllPatients(){
+    public void findAllPatients() throws ResourseNotFountException {
         Assertions.assertEquals(patientService.findAll().size(), 2);
     }
     @Test
-    public void updatePatients(){
+    public void updatePatients() throws ResourseNotFountException {
         AddressDTO a2 = new AddressDTO();
         a2.setStreet("adrsTest");
         a2.setLocality("adrsTest");
@@ -72,7 +73,7 @@ public class PatientTests {
         Assertions.assertEquals(patientService.findById(newp2.getId()).getName(), "patient2Updated");
     }
     @Test
-    public void deletePatient(){
+    public void deletePatient() throws ResourseNotFountException {
         AddressDTO a3 = new AddressDTO();
         a3.setStreet("adrsTest");
         a3.setLocality("adrsTest");

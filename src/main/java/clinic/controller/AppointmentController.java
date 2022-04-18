@@ -2,6 +2,7 @@ package clinic.controller;
 
 import clinic.dto.AppointmentDTO;
 
+import clinic.exceptions.ResourseNotFountException;
 import clinic.service.impl.AppointmentService;
 import clinic.service.impl.DentistService;
 import clinic.service.impl.PatientService;
@@ -24,41 +25,30 @@ public class AppointmentController {
     private DentistService dentistService;
     @CrossOrigin(origins = "*")
     @GetMapping("/{id}")
-    public ResponseEntity<AppointmentDTO> findById(@PathVariable("id") Integer id) {
-        AppointmentDTO appointmentDTO = appointmentService.findById(id);
-        return new ResponseEntity<>(appointmentDTO, HttpStatus.OK);
+    public ResponseEntity<AppointmentDTO> findById(@PathVariable("id") Integer id) throws ResourseNotFountException {
+        return new ResponseEntity<>(appointmentService.findById(id), HttpStatus.OK);
     }
     @CrossOrigin(origins = "*")
     @PostMapping()
     public ResponseEntity<AppointmentDTO> create(@RequestBody AppointmentDTO appointmentDTO){
-        AppointmentDTO newAppointmentDTO = appointmentService.create(appointmentDTO);
-        return new ResponseEntity<>(newAppointmentDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(appointmentService.create(appointmentDTO), HttpStatus.CREATED);
 
     }
     @CrossOrigin(origins = "*")
     @PutMapping()
     public ResponseEntity<AppointmentDTO> update(@RequestBody AppointmentDTO appointmentDTO){
-        AppointmentDTO newAppointmentDTO = appointmentService.create(appointmentDTO);
-        return new ResponseEntity<>(newAppointmentDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(appointmentService.create(appointmentDTO), HttpStatus.CREATED);
     }
     @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id){
-        ResponseEntity<String> response = null;
-
-        if (appointmentService.findById(id) != null){
+    public ResponseEntity<String> delete(@PathVariable Integer id) throws ResourseNotFountException {
             appointmentService.deleteById(id);
-            response = ResponseEntity.ok().body("Appointment deleted");
-        } else {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return response;
+        return ResponseEntity.ok().body("Appointment deleted");
     }
     @CrossOrigin(origins = "*")
     @GetMapping("/all")
     public  ResponseEntity<Set<AppointmentDTO>> findAll(){
-        Set<AppointmentDTO> appointmentDTOSet = appointmentService.findAll();
-        return new ResponseEntity<>(appointmentDTOSet, HttpStatus.OK);
+        return new ResponseEntity<>(appointmentService.findAll(), HttpStatus.OK);
     }
 
 }

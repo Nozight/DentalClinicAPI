@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalException {
     @ExceptionHandler
     public ResponseEntity<String> processErrorNotfound(ResourseNotFountException ex){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage() + "GLOBAL");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage() + " GLOBAL");
     }
 }

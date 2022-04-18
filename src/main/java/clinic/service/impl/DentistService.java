@@ -31,8 +31,15 @@ public class DentistService implements IDentistService {
     public DentistDTO findById( Integer id) throws ResourseNotFountException {
         Optional<Dentist> dentist = dentistRepository.findById(id);
         if (dentist.isEmpty())
+            throw new ResourseNotFountException(("Dentist (id:"+ id +")  doesn´t exist"));
+        return objectMapper.convertValue(dentist,DentistDTO.class);
+    }
+    @Override
+    public DentistDTO findDentistByName(String name) throws ResourseNotFountException {
+        Dentist dentist = dentistRepository.findDentistByName(name);
+        if (dentist == null)
             throw new ResourseNotFountException(("Dentist doesn´t exist"));
-        DentistDTO dentistDTO = objectMapper.convertValue(dentist,DentistDTO.class);
+        DentistDTO dentistDTO = mapDTO(dentist);
         return dentistDTO;
     }
 
@@ -49,25 +56,17 @@ public class DentistService implements IDentistService {
 
     @Override
     public void deleteById(Integer id) throws ResourseNotFountException {
-        Optional<Dentist> dentist = dentistRepository.findById(id);
-        if (dentist.isEmpty()){
+        if (dentistRepository.findById(id).isEmpty()){
             throw new ResourseNotFountException("Couldn´t delete dentist (id:"+ id +") because does not exist");
         }
         dentistRepository.deleteById(id);
-
     }
 
     @Override
     public DentistDTO update( DentistDTO dentistDTO) throws ResourseNotFountException {
         Dentist dentist = dentistRepository.findById(dentistDTO.getId())
-                .orElseThrow(()-> new ResourseNotFountException("Couldn´t delete dentist (id:"+ dentistDTO.getId() +") because does not exist"));
-
-                //Para mantener el mismo ID
-        dentist.setEnrollment(dentistDTO.getEnrollment());
-        dentist.setName(dentistDTO.getName());
-        dentist.setLast_name(dentistDTO.getLast_name());
-        Dentist newDentistSave = dentistRepository.save(dentist);
-        return mapDTO(newDentistSave);
+                .orElseThrow(()-> new ResourseNotFountException("Couldn´t update dentist (id:"+ dentistDTO.getId() +") because does not exist"));
+        return mapDTO(dentistRepository.save(dentist));
     }
 
     @Override
@@ -78,14 +77,5 @@ public class DentistService implements IDentistService {
                 dentistList.stream().map(dentist -> mapDTO(dentist)).collect(Collectors.toSet());
         return dentistDTOSSet;
 
-    }
-
-    @Override
-    public DentistDTO findDentistByName(String name) throws ResourseNotFountException {
-        Dentist dentist = dentistRepository.findDentistByName(name);
-        if (dentist.getAppointments().isEmpty())
-            throw new ResourseNotFountException(("Dentist doesn´t exist"));
-        DentistDTO dentistDTO = mapDTO(dentist);
-        return dentistDTO;
     }
 }

@@ -1,6 +1,7 @@
 package clinic.service.impl;
 
 import clinic.dto.PatientDTO;
+import clinic.exceptions.ResourseNotFountException;
 import clinic.model.Patient;
 import clinic.repository.IPatientRepository;
 import clinic.service.IPatientService;
@@ -30,20 +31,19 @@ public class PatientService implements IPatientService {
     }
 
     @Override
-    public PatientDTO findById(Integer id) {
+    public PatientDTO findById(Integer id) throws ResourseNotFountException {
         Optional<Patient> patient = patientRepository.findById(id);
-        PatientDTO patientDTO = null;
-        if (patient.isPresent())
-                patientDTO = objectMapper.convertValue(patient,PatientDTO.class);
-        return patientDTO;
+        if (patient.isEmpty())
+            throw new ResourseNotFountException(("Patient doesn´t exist"));
+        return objectMapper.convertValue(patient,PatientDTO.class);
+
     }
     @Override
-    public PatientDTO findPatientByName(String name) {
+    public PatientDTO findPatientByName(String name) throws ResourseNotFountException {
         Patient patient = patientRepository.findPatientByName(name);
-        PatientDTO patientDTO = null;
-        if (patient != null)
-            patientDTO = objectMapper.convertValue(patient,PatientDTO.class);
-        return patientDTO;
+        if (patient == null)
+            throw new ResourseNotFountException(("Patient not found"));
+        return objectMapper.convertValue(patient,PatientDTO.class);
     }
 
     @Override
@@ -59,25 +59,17 @@ public class PatientService implements IPatientService {
     }
 
     @Override
-    public void deleteById(Integer id) {
-        //1- buscar la entidad 2- verificar que se encontro 3- eliminarla
-        Optional<Patient> patient = patientRepository.findById(id);
-        String result = "Couldn´t find Patient";
-        if (patient != null)
-            result="Patient Deleted";
+    public void deleteById(Integer id) throws ResourseNotFountException {
+        if (patientRepository.findById(id).isEmpty())
+            throw new ResourseNotFountException("Couldn´t delete patient (id:"+ id +") because does not exist");
         patientRepository.deleteById(id);
-
     }
 
     @Override
-    public PatientDTO update(PatientDTO patientDTO) {
-        //DTO recibiendo por parametr
-        //1- DTO a Patient
-        Patient patient = mapEntity(patientDTO);
-        //2- la entidad guardamos en base de datos
-        Patient newPatientSave = patientRepository.save(patient);
-        //3- la entidad guardada en la base de datos la retornamos como DTO
-        return mapDTO(newPatientSave);
+    public PatientDTO update(PatientDTO patientDTO) throws ResourseNotFountException {
+        Patient patient = patientRepository.findById(patientDTO.getId())
+                .orElseThrow(() -> new ResourseNotFountException("Couldn´t update patient (id:"+ patientDTO.getId() +") because does not exist"));
+        return mapDTO(patientRepository.save(patient));
     }
 
     @Override
