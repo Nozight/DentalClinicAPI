@@ -25,28 +25,4 @@ public class Dentist {
     @JsonIgnore
     private Set<Appointment> appointments;
 
-
-    /* //Los trae @Data ↓ ↓ ↓
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Dentist dentist = (Dentist) o;
-        return Objects.equals(id, dentist.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Dentist{" +
-                "id=" + id +
-                ", enrollment=" + enrollment +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
-    }*/
 }

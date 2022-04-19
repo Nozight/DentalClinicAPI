@@ -11,7 +11,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Date appointment_date;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "dentist_id", referencedColumnName = "id")
     private Dentist dentist;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)

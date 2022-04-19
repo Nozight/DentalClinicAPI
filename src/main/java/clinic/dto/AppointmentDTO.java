@@ -10,6 +10,6 @@ import java.util.Date;
 public class AppointmentDTO {
     private Integer id;
     private Date appointment_date;
-    private Patient patient;
-    private Dentist dentist;
+    private PatientDTO patient;
+    private DentistDTO dentist;
 }
