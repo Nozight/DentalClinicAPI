@@ -40,13 +40,46 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/**")
-                .permitAll()
+                .antMatchers("/api/appointment/**" ).hasAuthority("USER") //quiza no todos los endpoints deberian estar habilitados(puede borrar?)
+                .antMatchers("/api/dentist/**", "/api/patient/**", "/api/appointment/**").hasAuthority("ADMIN")
+                .antMatchers("/**").hasAuthority("USER")
+                .antMatchers("/**").hasAuthority("ADMIN")
+
                 .anyRequest()
                 .authenticated().and()
                 .formLogin()
-                /*.defaultSuccessUrl("/homepage.html",true)*/;
+                .permitAll()
+                .defaultSuccessUrl("/homepage.html",true)
+                .and().exceptionHandling().accessDeniedPage("/403");//Something went wrong page
+         http   .headers().frameOptions().sameOrigin();
 
+         /*http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/turnos/**").hasAuthority("USER")
+                .antMatchers("/odontologos/**", "/pacientes/**").hasAuthority("ADMIN")
+                .antMatchers("/index.html",
+                        "/registroTurnos.html",
+                        "/listaTurnos.html")
+                .hasAuthority("USER")
+                .antMatchers("/registroOdontologos.html",
+                        "/registroPacientes.html",
+                        "/index.html",
+                        "/listaOdontologos.html",
+                        "/listaPacientes.html")
+
+                .hasAuthority("ADMIN")
+
+                .anyRequest()
+                .authenticated().and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
+
+*/
     }
 
     @Override
