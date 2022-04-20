@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -29,6 +30,7 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Autowired
     private AppUserService userService;
 
@@ -39,47 +41,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
 
         http.csrf().disable()
+
                 .authorizeRequests()
-                .antMatchers("/api/appointment/**" ).hasAuthority("USER") //quiza no todos los endpoints deberian estar habilitados(puede borrar?)
+                .antMatchers("/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+
+                //Especific authority(Reemplazar por lo de arriba)
+                /*.antMatchers("/api/appointment/**" ).hasAuthority("USER") //quiza no todos los endpoints deberian estar habilitados(puede borrar?)
                 .antMatchers("/api/dentist/**", "/api/patient/**", "/api/appointment/**").hasAuthority("ADMIN")
                 .antMatchers("/**").hasAuthority("USER")
                 .antMatchers("/**").hasAuthority("ADMIN")
-
                 .anyRequest()
-                .authenticated().and()
+                .authenticated()*/
+
+                .and()
                 .formLogin()
                 .permitAll()
                 .defaultSuccessUrl("/homepage.html",true)
-                .and().exceptionHandling().accessDeniedPage("/403");//Something went wrong page
-         http   .headers().frameOptions().sameOrigin();
+                .and().exceptionHandling().accessDeniedPage("/403")//Something went wrong page
+                .and().headers().frameOptions().sameOrigin();
 
-         /*http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/turnos/**").hasAuthority("USER")
-                .antMatchers("/odontologos/**", "/pacientes/**").hasAuthority("ADMIN")
-                .antMatchers("/index.html",
-                        "/registroTurnos.html",
-                        "/listaTurnos.html")
-                .hasAuthority("USER")
-                .antMatchers("/registroOdontologos.html",
-                        "/registroPacientes.html",
-                        "/index.html",
-                        "/listaOdontologos.html",
-                        "/listaPacientes.html")
-
-                .hasAuthority("ADMIN")
-
-                .anyRequest()
-                .authenticated().and()
-                .formLogin()
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .exceptionHandling().accessDeniedPage("/403");
-
-*/
     }
 
     @Override
@@ -96,5 +79,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
-
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 }
