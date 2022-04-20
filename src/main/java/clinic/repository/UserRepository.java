@@ -1,6 +1,6 @@
 package clinic.repository;
 
-import clinic.service.security.AppUser;
+import clinic.model.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

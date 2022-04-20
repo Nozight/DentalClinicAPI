@@ -69,5 +69,10 @@ public class AppointmentService implements IAppointmentService {
                 appointmentList.stream().map(appointment -> mapDTO(appointment)).collect(Collectors.toSet());
         return appointmentDTOSet;
     }
-
+    public boolean existById(Integer id){
+        if (appointmentRepository.existsById(id))
+            return true;
+        else
+            return false;
+    }
 }

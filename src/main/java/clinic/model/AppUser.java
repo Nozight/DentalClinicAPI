@@ -1,4 +1,4 @@
-package clinic.service.security;
+package clinic.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

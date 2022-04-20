@@ -17,5 +17,4 @@ public class DentistDTO {
     private Integer enrollment;
     private String name;
     private String last_name;
-    private Set<Appointment> appointments;
 }

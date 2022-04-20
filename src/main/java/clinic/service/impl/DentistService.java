@@ -64,9 +64,9 @@ public class DentistService implements IDentistService {
 
     @Override
     public DentistDTO update( DentistDTO dentistDTO) throws ResourseNotFountException {
-        Dentist dentist = dentistRepository.findById(dentistDTO.getId())
-                .orElseThrow(()-> new ResourseNotFountException("Couldn´t update dentist (id:"+ dentistDTO.getId() +") because does not exist"));
-        return mapDTO(dentistRepository.save(dentist));
+        if (!dentistRepository.existsById(dentistDTO.getId())) //evito pedirle todos los datos a la DB
+            new ResourseNotFountException("Couldn´t update dentist (id:"+ dentistDTO.getId() +") because does not exist");
+        return mapDTO(dentistRepository.save(mapEntity(dentistDTO)));
     }
 
     @Override
@@ -76,6 +76,12 @@ public class DentistService implements IDentistService {
                 //Voy transformando cada dentista en DTO y con collect voy juntando los valores y guardandolos en una lista
                 dentistList.stream().map(dentist -> mapDTO(dentist)).collect(Collectors.toSet());
         return dentistDTOSSet;
+    }
 
+    public boolean existById(Integer id){
+        if (dentistRepository.existsById(id))
+            return true;
+        else
+            return false;
     }
 }

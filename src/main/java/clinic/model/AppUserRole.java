@@ -1,4 +1,4 @@
-package clinic.service.security;
+package clinic.model;
 
 public enum AppUserRole {
     USER,ADMIN

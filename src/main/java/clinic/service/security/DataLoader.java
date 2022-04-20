@@ -1,5 +1,7 @@
 package clinic.service.security;
 
+import clinic.model.AppUser;
+import clinic.model.AppUserRole;
 import clinic.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -19,10 +21,10 @@ public class DataLoader implements ApplicationRunner {
 
     public void run(ApplicationArguments args) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode("password");
+        String hashedPassword = passwordEncoder.encode("user");
         BCryptPasswordEncoder passwordEncoder2 = new BCryptPasswordEncoder();
         String hashedPassword2 = passwordEncoder2.encode("password2");
-        userRepository.save(new AppUser("Diego", "diego", "diego@digital.com", hashedPassword, AppUserRole.ADMIN));
+        userRepository.save(new AppUser("user", "user", "user", hashedPassword, AppUserRole.ADMIN));
         userRepository.save(new AppUser("Paula", "paula", "paula@digital.com", hashedPassword2, AppUserRole.USER));
     }
 }

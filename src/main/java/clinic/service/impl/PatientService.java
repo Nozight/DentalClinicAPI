@@ -69,7 +69,7 @@ public class PatientService implements IPatientService {
     public PatientDTO update(PatientDTO patientDTO) throws ResourseNotFountException {
         Patient patient = patientRepository.findById(patientDTO.getId())
                 .orElseThrow(() -> new ResourseNotFountException("Couldn´t update patient (id:"+ patientDTO.getId() +") because does not exist"));
-        return mapDTO(patientRepository.save(patient));
+        return mapDTO(patientRepository.save(mapEntity(patientDTO)));
     }
 
     @Override
@@ -80,6 +80,10 @@ public class PatientService implements IPatientService {
                 patientList.stream().map(patient -> mapDTO(patient)).collect(Collectors.toSet());
         return patientDTOSSet;
     }
-
-
+    public boolean existById(Integer id){
+        if (patientRepository.existsById(id))
+            return true;
+        else
+            return false;
+    }
 }
