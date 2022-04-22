@@ -6,4 +6,5 @@ import clinic.exceptions.ResourseNotFountException;
 
 public interface IDentistService extends ICRUDService<DentistDTO>{
      DentistDTO findDentistByName(String name) throws ResourseNotFountException;
+     DentistDTO findDentistByEnrollment(Integer enrollment) throws ResourseNotFountException;
 }

@@ -5,6 +5,8 @@ import clinic.dto.PatientDTO;
 
 import clinic.exceptions.ResourseNotFountException;
 import clinic.service.impl.PatientService;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.beans.SamePropertyValuesAs;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -31,7 +33,7 @@ public class PatientTests {
         p1.setDni("1234");
         p1.setAddress(a1);
         PatientDTO newp1 = patientService.create(p1);
-        Assertions.assertEquals(patientService.findById(newp1.getId()).getName(), p1.getName());
+        MatcherAssert.assertThat(p1, SamePropertyValuesAs.samePropertyValuesAs(patientService.findById(newp1.getId())));
         patientService.deleteById(newp1.getId());
     }
 
@@ -113,8 +115,7 @@ public class PatientTests {
         p2test.setAddress(a2);;
 
         PatientDTO newp2Updated = patientService.update(p2test);
-
-        Assertions.assertEquals(patientService.findPatientByName(newp2Updated.getName()).getName(), "patient2Updated");
+        MatcherAssert.assertThat(p2test, SamePropertyValuesAs.samePropertyValuesAs(patientService.findById(newp2Updated.getId())));
     }
     @Test
     public void deletePatient() throws ResourseNotFountException {

@@ -4,13 +4,17 @@ import clinic.dto.DentistDTO;
 
 import clinic.exceptions.ResourseNotFountException;
 import clinic.service.impl.DentistService;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.beans.SamePropertyValuesAs;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DentistTests {
     @Autowired
     DentistService dentistService;
@@ -22,7 +26,8 @@ public class DentistTests {
         d1.setName("dentist1");
         d1.setLast_name("test1");
         DentistDTO newd1 = dentistService.create(d1);
-        Assertions.assertEquals(dentistService.findById(newd1.getId()).getName(), d1.getName());
+        d1.setId(newd1.getId());
+        MatcherAssert.assertThat(d1, SamePropertyValuesAs.samePropertyValuesAs(dentistService.findById(newd1.getId())));
         dentistService.deleteById(newd1.getId());
     }
 
@@ -64,7 +69,7 @@ public class DentistTests {
         d2test.setName("dentist2Updated");
         d2test.setLast_name("test2Updated");
         dentistService.update(d2test);
-        Assertions.assertEquals(dentistService.findById(newd2.getId()).getName(), "dentist2Updated");
+        MatcherAssert.assertThat(d2test, SamePropertyValuesAs.samePropertyValuesAs(dentistService.findById(newd2.getId())));
         dentistService.deleteById(newd2.getId());
     }
     @Test

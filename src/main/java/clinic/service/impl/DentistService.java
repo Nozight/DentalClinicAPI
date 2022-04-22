@@ -44,6 +44,15 @@ public class DentistService implements IDentistService {
     }
 
     @Override
+    public DentistDTO findDentistByEnrollment(Integer enrollment) throws ResourseNotFountException {
+        Dentist dentist = dentistRepository.findDentistByEnrollment(enrollment);
+        if (dentist == null)
+            throw new ResourseNotFountException(("Dentist doesn´t exist"));
+        DentistDTO dentistDTO = mapDTO(dentist);
+        return dentistDTO;
+    }
+
+    @Override
     public DentistDTO create( DentistDTO dentistDTO) {
         //DTO recibiendo por parametr
         //1- DTO a Dentist
