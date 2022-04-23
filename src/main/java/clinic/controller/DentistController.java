@@ -12,6 +12,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("api/dentist")
+@CrossOrigin(origins = "*", exposedHeaders = "**")
 public class DentistController {
     @Autowired
     private DentistService dentistService;

@@ -1,4 +1,3 @@
-/*
 package clinic.controller;
 
 import clinic.dto.AppUserDTO;
@@ -19,4 +18,3 @@ public class UserController {
         return dataLoader.register(appUser);
     }
 }
-*/

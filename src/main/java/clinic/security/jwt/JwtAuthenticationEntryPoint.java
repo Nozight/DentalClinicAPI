@@ -1,4 +1,4 @@
-package clinic.jwt;
+package clinic.security.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

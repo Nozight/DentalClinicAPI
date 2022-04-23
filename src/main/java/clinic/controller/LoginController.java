@@ -1,4 +1,3 @@
-/*
 package clinic.controller;
 
 import clinic.security.model.AppUser;
@@ -35,4 +34,3 @@ public class LoginController {
 
     }
 }
-*/

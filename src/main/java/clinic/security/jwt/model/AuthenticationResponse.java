@@ -1,4 +1,4 @@
-package clinic.jwt.model;
+package clinic.security.jwt.model;
 
 public class AuthenticationResponse {
 

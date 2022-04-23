@@ -1,8 +1,8 @@
-package clinic.jwt.controller;
+package clinic.security.jwt.controller;
 
-import clinic.jwt.model.AuthenticationRequest;
-import clinic.jwt.model.AuthenticationResponse;
-import clinic.jwt.service.JwtUserDetailsService;
+import clinic.security.jwt.model.AuthenticationRequest;
+import clinic.security.jwt.model.AuthenticationResponse;
+import clinic.security.jwt.service.JwtUserDetailsService;
 import clinic.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

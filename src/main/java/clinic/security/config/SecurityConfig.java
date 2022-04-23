@@ -1,11 +1,12 @@
 package clinic.security.config;
 
-import clinic.jwt.JwtAuthenticationEntryPoint;
-import clinic.jwt.JwtRequestFilter;
-import clinic.jwt.service.JwtUserDetailsService;
+import clinic.security.jwt.JwtAuthenticationEntryPoint;
+import clinic.security.jwt.JwtRequestFilter;
+import clinic.security.jwt.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -50,24 +51,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure( HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate").permitAll()
-                .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-                /*.headers().frameOptions().sameOrigin();//Para poder visualizar h2*///Ya no sirve
-                //FormLogin?
-                /*.formLogin()
-                .permitAll()
-                .defaultSuccessUrl("/homepage.html",true)*/
+                .authorizeRequests().antMatchers(HttpMethod.GET,"/api/dentist/**").hasAnyAuthority("ADMIN","USER")
+                .and()
+                .authorizeRequests().antMatchers( "/api/dentist/**").hasAuthority("ADMIN")
+                .and()
+                .authorizeRequests().antMatchers(HttpMethod.GET,"/api/patient/**").hasAnyAuthority("ADMIN","USER")
+                .and()
+                .authorizeRequests().antMatchers("/api/patient/**").hasAuthority("ADMIN")
+                .and()
+                .authorizeRequests().antMatchers("/api/appointment/**").hasAnyAuthority("ADMIN","USER")
+                .and()
+                .authorizeRequests().antMatchers("/authenticate").permitAll().anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-                //Especific authority(Reemplazar por lo de arriba)
-       /* .antMatchers("/**").hasAuthority("ADMIN").anyRequest().authenticated()*/
-                /*.antMatchers("/api/appointment/**" ).hasAuthority("USER") //quiza no todos los endpoints deberian estar habilitados(puede borrar?)
-                .antMatchers("/api/dentist/**", "/api/patient/**", "/api/appointment/**").hasAuthority("ADMIN")
-                .antMatchers("/**").hasAuthority("USER")
-                .antMatchers("/**").hasAuthority("ADMIN")
-                .anyRequest()
-                .authenticated()*/
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 

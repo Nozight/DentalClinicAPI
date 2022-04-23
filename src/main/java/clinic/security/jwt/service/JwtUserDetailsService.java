@@ -1,4 +1,4 @@
-package clinic.jwt.service;
+package clinic.security.jwt.service;
 
 import clinic.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,6 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username).get();
+        return userRepository.findByEmailOrUsername(username).get();
     }
 }

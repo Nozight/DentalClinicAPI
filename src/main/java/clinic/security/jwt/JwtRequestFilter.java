@@ -1,4 +1,4 @@
-package clinic.jwt;
+package clinic.security.jwt;
 
 import clinic.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -31,28 +31,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
 
         if(authorizationHeader != null &&  authorizationHeader.startsWith("Bearer")) {
-
             jwt = authorizationHeader.substring(7);
-            try{
-                username = jwtUtil.extractUserName(jwt);
-                logger.debug("jwt recibido");
-            } catch  (IllegalArgumentException e) {
-                logger.warn("Unable to get JWT Token");
-            } catch (ExpiredJwtException e) {
-                logger.warn("JWT Token has expired");
-            }
-        } else {
-            logger.warn(httpServletRequest);
-            logger.warn(httpServletResponse);
-
-            logger.warn(authorizationHeader);
-            logger.warn("JWT Token does not begin with Bearer String");
-        }
+            username = jwtUtil.extractUserName(jwt);
+            logger.info("JWT: "+jwt);
+            logger.info("Username: "+username);
+        } /*else {
+            logger.warn("")
+        }*/
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails  = this.userDetailsService.loadUserByUsername(username);
             if(jwtUtil.validateToken(jwt, userDetails)) {
-                UsernamePasswordAuthenticationToken  usernamePasswordAuthenticationToken  = new UsernamePasswordAuthenticationToken(userDetails,
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken  = new UsernamePasswordAuthenticationToken(userDetails,
                         null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

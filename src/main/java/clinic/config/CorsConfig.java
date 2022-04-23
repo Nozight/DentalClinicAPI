@@ -1,3 +1,4 @@
+/*
 package clinic.config;
 
 import org.springframework.context.annotation.Bean;
@@ -34,4 +35,4 @@ public class CorsConfig implements WebMvcConfigurer {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-}
+}*/
