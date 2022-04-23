@@ -13,30 +13,25 @@
 		<version>2.6.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
-		<!-- Spring Security -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-		</dependency>
 
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -53,11 +48,11 @@
 			<optional>true</optional>
 		</dependency>
 		<!-- MySQL -->
-		<dependency>
+		<!--<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
-		</dependency>
+		</dependency>-->
 		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -94,10 +89,17 @@
 			<artifactId>codegen-utils</artifactId>
 			<version>5.0.0</version>
 		</dependency>
+		<!--- JUnit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<!-- Json WebToken -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
 		</dependency>
 	</dependencies>
 
@@ -122,7 +124,7 @@
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>2.9</version>
 			</plugin>
-			<plugin>
+			<!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.3.2</version>
@@ -135,21 +137,21 @@
 						WEB-INF/view/react/*
 					</warSourceExcludes>
 				</configuration>
-			</plugin>
-			<plugin>
+			</plugin>-->
+			<!--<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<!-- Use the latest released version:
-                https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+				&lt;!&ndash; Use the latest released version:
+                https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ &ndash;&gt;
 				<version>1.12.1</version>
 				<executions>
 					<execution>
-						<!-- optional: you don't really need execution ids, but it looks nice in your build log. -->
+						&lt;!&ndash; optional: you don't really need execution ids, but it looks nice in your build log. &ndash;&gt;
 						<id>install node and npm</id>
 						<goals>
 							<goal>install-node-and-npm</goal>
 						</goals>
-						<!-- optional: default phase is "generate-resources" -->
+						&lt;!&ndash; optional: default phase is "generate-resources" &ndash;&gt;
 						<phase>generate-resources</phase>
 					</execution>
 				</executions>
@@ -157,7 +159,7 @@
 					<nodeVersion>v14.17.2</nodeVersion>
 
 				</configuration>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 

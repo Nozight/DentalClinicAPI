@@ -1,11 +1,9 @@
+/*
 package clinic.controller;
 
-import clinic.dto.AppUserDTO;
-import clinic.model.AppUser;
-import clinic.service.security.AppUserService;
-import clinic.service.security.DataLoader;
+import clinic.security.model.AppUser;
+import clinic.security.service.DataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,3 +35,4 @@ public class LoginController {
 
     }
 }
+*/

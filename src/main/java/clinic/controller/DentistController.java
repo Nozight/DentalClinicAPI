@@ -26,6 +26,11 @@ public class DentistController {
         return new ResponseEntity<>(dentistService.findDentistByName(name), HttpStatus.OK);
     }
     @CrossOrigin(origins = "*")
+    @GetMapping("/enrollment")
+    public ResponseEntity<DentistDTO> findByEnrollment(@RequestParam Integer enrollment) throws ResourseNotFountException {
+        return new ResponseEntity<>(dentistService.findDentistByEnrollment(enrollment), HttpStatus.OK);
+    }
+    @CrossOrigin(origins = "*")
     @PostMapping()
     public ResponseEntity<DentistDTO> create(@RequestBody DentistDTO dentistDTO){
         return new ResponseEntity<>(dentistService.create(dentistDTO), HttpStatus.OK);
