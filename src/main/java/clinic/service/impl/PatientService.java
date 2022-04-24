@@ -77,6 +77,7 @@ public class PatientService implements IPatientService {
     public PatientDTO update(PatientDTO patientDTO) throws ResourseNotFountException {
         Patient patient = patientRepository.findById(patientDTO.getId())
                 .orElseThrow(() -> new ResourseNotFountException("Couldn´t update patient (id:"+ patientDTO.getId() +") because does not exist"));
+        patientDTO.setAdmission_date(patient.getAdmission_date());
         return mapDTO(patientRepository.save(mapEntity(patientDTO)));
     }
 
