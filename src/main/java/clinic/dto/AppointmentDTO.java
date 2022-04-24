@@ -10,6 +10,6 @@ import java.time.LocalDate;
 public class AppointmentDTO {
     private Integer id;
     private LocalDate appointment_date;
-    private Patient patient;
-    private Dentist dentist;
+    private PatientDTO patient;
+    private DentistDTO dentist;
 }

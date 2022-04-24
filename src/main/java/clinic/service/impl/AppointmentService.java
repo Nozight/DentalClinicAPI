@@ -21,6 +21,10 @@ public class AppointmentService implements IAppointmentService {
     private IAppointmentRepository appointmentRepository;
     @Autowired
     ObjectMapper objectMapper;
+    @Autowired
+    DentistService dentistService;
+    @Autowired
+    PatientService patientService;
 
     public AppointmentDTO mapDTO(Appointment appointment){
         return objectMapper.convertValue(appointment,AppointmentDTO.class);
@@ -56,10 +60,12 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public AppointmentDTO update(AppointmentDTO appointmentDTO) {
-        Appointment appointment = appointmentRepository.findById(appointmentDTO.getId())
-                .orElseThrow(() -> new ResolutionException("Couldn´t identify appointment"));
-        return mapDTO(appointment);
+    public AppointmentDTO update(AppointmentDTO appointmentDTO) throws ResourseNotFountException {
+        if (!appointmentRepository.existsById(appointmentDTO.getId()))
+            new ResolutionException("Couldn´t identify appointment");
+        Appointment appointment = mapEntity(appointmentDTO);
+        appointment.setId(appointment.getId());
+        return mapDTO(appointmentRepository.save(appointment));
     }
 
     @Override

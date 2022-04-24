@@ -12,6 +12,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("api/patient")
+@CrossOrigin(origins = "*")
 public class PatientController {
     @Autowired
     private PatientService patientService;
@@ -26,6 +27,11 @@ public class PatientController {
         return new ResponseEntity<>(patientService.findPatientByName(name),HttpStatus.OK);
     }
     @CrossOrigin(origins = "*")
+    @GetMapping("/dni")
+    public ResponseEntity<PatientDTO> findByDni(@RequestParam String dni) throws ResourseNotFountException {
+        return new ResponseEntity<>(patientService.findPatientByDni(dni),HttpStatus.OK);
+    }
+    @CrossOrigin(origins = "*")
     @PostMapping()
     public ResponseEntity<PatientDTO> create(@RequestBody PatientDTO PatientDTO){
         return new ResponseEntity<>(patientService.create(PatientDTO), HttpStatus.OK);
@@ -33,6 +39,7 @@ public class PatientController {
     @CrossOrigin(origins = "*")
     @PutMapping()
     public ResponseEntity<PatientDTO> update(@RequestBody PatientDTO PatientDTO) throws ResourseNotFountException {
+
         return ResponseEntity.ok(patientService.update(PatientDTO));
     }
     @CrossOrigin(origins = "*")

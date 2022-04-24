@@ -36,8 +36,10 @@ public class AppointmentController {
     }
     @CrossOrigin(origins = "*")
     @PutMapping()
-    public ResponseEntity<AppointmentDTO> update(@RequestBody AppointmentDTO appointmentDTO){
-        return new ResponseEntity<>(appointmentService.create(appointmentDTO), HttpStatus.CREATED);
+    public ResponseEntity<AppointmentDTO> update(@RequestBody AppointmentDTO appointmentDTO) throws ResourseNotFountException {
+        appointmentDTO.setPatient(patientService.findById(appointmentDTO.getPatient().getId()));
+        appointmentDTO.setDentist(dentistService.findById(appointmentDTO.getDentist().getId()));
+        return new ResponseEntity<>(appointmentService.update(appointmentDTO), HttpStatus.CREATED);
     }
     @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}")

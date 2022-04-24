@@ -47,6 +47,14 @@ public class PatientService implements IPatientService {
     }
 
     @Override
+    public PatientDTO findPatientByDni(String dni) throws ResourseNotFountException {
+        Patient patient = patientRepository.findPatientByDni(dni);
+        if (patient == null)
+            throw new ResourseNotFountException(("Patient not found"));
+        return objectMapper.convertValue(patient,PatientDTO.class);
+    }
+
+    @Override
     public PatientDTO create(PatientDTO patientDTO) {
         patientDTO.setAdmission_date(LocalDate.now());
         //DTO recibiendo por parametr

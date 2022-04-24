@@ -48,8 +48,8 @@ public class AppointmentsTest {
         /* APPOINTMENT */
         AppointmentDTO apnt1 = new AppointmentDTO();
         apnt1.setAppointment_date(LocalDate.of(2022,01,01));
-        apnt1.setDentist(dentistService.mapEntity(newd1));
-        apnt1.setPatient(patientService.mapEntity(newp1));
+        apnt1.setDentist(newd1);
+        apnt1.setPatient(newp1);
         AppointmentDTO newApnt1 = appointmentService.create(apnt1);
 
         apnt1.setId(newApnt1.getId());
@@ -81,8 +81,8 @@ public class AppointmentsTest {
         /* APPOINTMENT */
         AppointmentDTO apnt1 = new AppointmentDTO();
         apnt1.setAppointment_date(LocalDate.of(2022,01,01));
-        apnt1.setDentist(dentistService.mapEntity(newd1));
-        apnt1.setPatient(patientService.mapEntity(newp1));
+        apnt1.setDentist(newd1);
+        apnt1.setPatient(newp1);
         AppointmentDTO newApnt1 = appointmentService.create(apnt1);
 
         /* DENTIST 2*/
@@ -107,8 +107,8 @@ public class AppointmentsTest {
         /* APPOINTMENT 2*/
         AppointmentDTO apnt2 = new AppointmentDTO();
         apnt1.setAppointment_date(LocalDate.of(2022,01,02));
-        apnt1.setDentist(dentistService.mapEntity(newd2));
-        apnt1.setPatient(patientService.mapEntity(newp2));
+        apnt1.setDentist(newd2);
+        apnt1.setPatient(newp2);
         apnt2.setId(newApnt1.getId());
         AppointmentDTO newApnt2 = appointmentService.update(apnt2);
 
@@ -140,8 +140,8 @@ public class AppointmentsTest {
         /* APPOINTMENT */
         AppointmentDTO apnt1 = new AppointmentDTO();
         apnt1.setAppointment_date(LocalDate.of(2022,01,01));
-        apnt1.setDentist(dentistService.mapEntity(newd1));
-        apnt1.setPatient(patientService.mapEntity(newp1));
+        apnt1.setDentist(newd1);
+        apnt1.setPatient(newp1);
         AppointmentDTO newApnt1 = appointmentService.create(apnt1);
 
         appointmentService.deleteById(newApnt1.getId());
@@ -172,8 +172,8 @@ public class AppointmentsTest {
         /* APPOINTMENT */
         AppointmentDTO apnt1 = new AppointmentDTO();
         apnt1.setAppointment_date(LocalDate.of(2022,01,01));
-        apnt1.setDentist(dentistService.mapEntity(newd1));
-        apnt1.setPatient(patientService.mapEntity(newp1));
+        apnt1.setDentist(newd1);
+        apnt1.setPatient(newp1);
         AppointmentDTO newApnt1 = appointmentService.create(apnt1);
 
         /* DENTIST 2*/
@@ -198,8 +198,8 @@ public class AppointmentsTest {
         /* APPOINTMENT 2*/
         AppointmentDTO apnt2 = new AppointmentDTO();
         apnt1.setAppointment_date(LocalDate.of(2022,01,02));
-        apnt1.setDentist(dentistService.mapEntity(newd2));
-        apnt1.setPatient(patientService.mapEntity(newp2));
+        apnt1.setDentist(newd2);
+        apnt1.setPatient(newp2);
         AppointmentDTO newApnt2 = appointmentService.create(apnt2);
 
         Assertions.assertEquals(appointmentService.findAll().size(), 2);
